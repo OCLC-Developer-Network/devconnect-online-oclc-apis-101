@@ -1,23 +1,23 @@
 const xpath = require('xpath');
 const dom = require('xmldom').DOMParser;
 
-module.exports = class Error {
+module.exports = class BibError {
     constructor(error) {
     	this.error = error;
-        if (error.response) {
+        if (this.error.response) {
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
-        	this.code = error.response.status;
-    	    let doc = new dom().parseFromString(response);
-    		this.message = doc.message;
-    		this.details = doc.details;
-            this.request = error.request;
-          } else if (error.request) {
+        	this.code = this.error.response.status;
+    	    let doc = new dom().parseFromString(this.error.response.data);
+    		this.message = doc.getElementsByTagName("message")[0].firstChild.data;
+    		this.detail = doc.getElementsByTagName("detail")[0].firstChild.data;
+            this.request = this.error.request;
+          } else if (this.error.request) {
             // The request was made but no response was received
-            this.request = error.request;
+            this.request = this.error.request;
           } else {
             // Something happened in setting up the request that triggered an Error
-            this.message = error.message;
+            this.message = this.error.message;
           }
 	    
 	    

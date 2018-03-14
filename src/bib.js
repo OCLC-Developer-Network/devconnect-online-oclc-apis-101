@@ -6,7 +6,7 @@ const S = require('string');
 
 const serviceUrl = 'https://worldcat.org/bib/data/';
 
-const Error = require('../src/Error');
+const BibError = require('../src/BibError');
 
 module.exports = class Bib {
     constructor(record) {
@@ -87,7 +87,7 @@ module.exports = class Bib {
           	    		    	
           	    })
           		.catch (error => {
-          			reject(new Error(error.response.status, error.response.data));
+          			reject(new BibError(error));
           		});
         });
     }
