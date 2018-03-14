@@ -28,9 +28,9 @@ module.exports = class Bib {
     }
 
     getTitle(){
-		var title = this.record.dataFields.filter(dataField => dataField.tag == "24.").findSubfield('a').data;
-		if (this.record.dataFields.filter(dataField => dataField.tag == '24.').findSubfield('b').data){
-			title += this.record.dataFields.filter(dataField => dataField.tag == '24.').findSubfield('b').data;
+		var title = this.record.dataFields.filter(dataField => S(dataField.tag).startsWith('24'))[0].findSubfield('a').data;
+		if (this.record.dataFields.filter(dataField => S(dataField.tag).startsWith('24'))[0].findSubfield('b')){
+			title += this.record.dataFields.filter(dataField => S(dataField.tag).startsWith('24'))[0].findSubfield('b').data;
 		}
 		title = S(title).chompRight(" /").s;
 		return title;

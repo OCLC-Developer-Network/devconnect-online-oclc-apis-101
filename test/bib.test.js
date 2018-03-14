@@ -59,7 +59,7 @@ describe('Find Bib tests', () => {
         expect(response.getID()).to.equal('70775700')
         //expect(response.getRecord()).to.be.an.instanceof(Record);
         expect(response.getOCLCNumber()).to.equal('ocm70775700');
-        //expect(response.getTitle()).to.equal("Dogs and cats");
+        expect(response.getTitle()).to.equal("Dogs and cats");
         expect(response.getAuthor()).to.equal("Jenkins, Steve");
         
       });
