@@ -24,14 +24,14 @@ describe('Create Bib test', () => {
 	  });
 	  
 	  it('Sets the bib properties', () => {
-        //expect(bib.record).to.be.an.instanceof(Record);
+        expect(bib.record).to.be.an.instanceof(marc4js.marc.Record);
 	  });
 	  
 	  it('Has functioning getters', () => {
         expect(bib.getID()).to.equal('70775700')
-        //expect(bib.getRecord()).to.be.an.instanceof(Record);
+        expect(bib.getRecord()).to.be.an.instanceof(marc4js.marc.Record);
         expect(bib.getOCLCNumber()).to.equal('ocm70775700');
-        //expect(bib.getTitle()).to.equal("Dogs and cats");
+        expect(bib.getTitle()).to.equal("Dogs and cats");
         expect(bib.getAuthor()).to.equal("Jenkins, Steve");
 	  });
 	  
@@ -57,7 +57,7 @@ describe('Find Bib tests', () => {
     	expect(response).to.be.an.instanceof(Bib);
 
         expect(response.getID()).to.equal('70775700')
-        //expect(response.getRecord()).to.be.an.instanceof(Record);
+        expect(response.getRecord()).to.be.an.instanceof(marc4js.marc.Record);
         expect(response.getOCLCNumber()).to.equal('ocm70775700');
         expect(response.getTitle()).to.equal("Dogs and cats");
         expect(response.getAuthor()).to.equal("Jenkins, Steve");
