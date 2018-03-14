@@ -1,0 +1,15 @@
+<%- include('header.html') -%>
+    <h1>System Error</h1>
+    <div id="error_content">
+    <p id="status">Status - <%=error%></p>
+    <% if (error_message) { %>
+    <p id="message">Message - <%=error_message%></p>
+    <% }; %>
+    <% if (error_detail) { %>
+    <p id="detail"><%=error_detail%></p>
+    <% }; %>
+    <% if (oclcnumber) { %>
+    <p id="oclcnumber">OCLC Number - <%=oclcnumber%></p>
+    <% }; %>
+    </div>
+<%- include('footer.html') -%>
