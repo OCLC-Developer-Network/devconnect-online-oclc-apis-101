@@ -28,7 +28,7 @@ module.exports = class Bib {
     }
 
     getTitle(){
-		var title = this.record.dataFields.filter(dataField => S(dataField.tag).startsWith('24'))[0].findSubfield('a').data;
+		let title = this.record.dataFields.filter(dataField => S(dataField.tag).startsWith('24'))[0].findSubfield('a').data;
 		if (this.record.dataFields.filter(dataField => S(dataField.tag).startsWith('24'))[0].findSubfield('b')){
 			title += this.record.dataFields.filter(dataField => S(dataField.tag).startsWith('24'))[0].findSubfield('b').data;
 		}
@@ -37,7 +37,7 @@ module.exports = class Bib {
     }
     
     getAuthor(){
-    	var author;
+    	let author;
 		if (this.record.dataFields.filter(dataField => dataField.tag === '100')) {
 			author = this.record.dataFields.filter(dataField => dataField.tag === "100")[0].findSubfield('a').data;
 		} else if (this.record.dataFields.filter(dataField => dataField.tag === '110')) {
@@ -63,6 +63,20 @@ module.exports = class Bib {
     	return this.record;
     }
     
+    getRecordAsString(){
+    	let record = this.record
+    	return new Promise(function (res, reject){
+    		marc4js.transform(record, {toFormat: 'text'}, function(err, output) {
+    			if (err){
+    				reject(err);
+    			}else {
+    				res(output);
+    			}
+        	});
+    	});
+    	
+    }
+    
     
     static find(oclcnumber, accessToken) {
     	var config = {
@@ -75,11 +89,11 @@ module.exports = class Bib {
     	
     	var url = serviceUrl + oclcnumber;
         return new Promise(function (resolve, reject) {
-            axios.get(url, null, config)
+            axios.get(url, config)
           		.then(response => {
           			// parse out the MARC Record
         			let doc = new dom().parseFromString(response.data);
-        			select = xpath.useNamespaces({"atom": "http://www.w3.org/2005/Atom", "rb": "http://worldcat.org/rb"});
+        			let select = xpath.useNamespaces({"atom": "http://www.w3.org/2005/Atom", "rb": "http://worldcat.org/rb"});
         			let record = select('//atom:content/rb:response', doc)
           			marc4js.parse(record, {fromFormat: 'marcxml'}, function(err, records) {
           				resolve(new Bib(records[0]));

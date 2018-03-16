@@ -1,0 +1,11 @@
+<%- include('header.html') -%>
+<h1><%= bib.getTitle() %></h1>
+<div id="record">
+<h4>Raw MARC</h4>
+<div id="raw_record">
+<pre>
+<%= recordAsString %>
+</pre>
+</div>
+</div>
+<%- include('footer.html') -%>
