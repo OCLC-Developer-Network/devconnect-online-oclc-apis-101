@@ -1,5 +1,5 @@
 {
-  "name": "nodeJSExperiment",
+  "name": "devconnectprecon_2018",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -26,7 +26,7 @@
     "express": "^4.16.2",
     "js-yaml": "^3.10.0",
     "marc4js": "0.0.9",
-    "oclc-wskey": "^3.2.1",
+    "nodeauth": "git+https://github.com/OCLC-Developer-Network/oclc-auth-node.git",
     "read-yaml": "^1.1.0",
     "string": "^3.3.3",
     "xmldom": "^0.1.27",
