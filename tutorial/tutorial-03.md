@@ -6,7 +6,41 @@
 2. In your project file, create a file called `package.json`.
 	1. `$ touch package.json`
 3. Open `package.json` in your text editor.
-4. Copy and paste [this text](https://raw.githubusercontent.com/OCLC-Developer-Network/devconnect2018precon/master/package.json) into the file.
+4. Add the following
+```
+{
+  "name": "devconnectprecon_2018",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+  },
+  "keywords": [],
+  "author": "",
+  "license": "Apache 2.0",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.0.1",
+    "moxios": "^0.4.0",
+    "nodemon": "^1.17.1",
+    "serverless": "^1.26.1"
+  },
+  "dependencies": {
+    "aws-serverless-express": "^3.1.3",
+    "axios": "^0.17.1",
+    "body-parser": "^1.18.2",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
+    "js-yaml": "^3.10.0",
+    "marc4js": "0.0.9",
+    "read-yaml": "^1.1.0",
+    "string": "^3.3.3",
+    "xmldom": "^0.1.27",
+    "xpath": "0.0.27"
+  }
+}
+```
+
 5. Save the file.
 6. Create the following directories:
 ```bash
