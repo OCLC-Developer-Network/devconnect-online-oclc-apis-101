@@ -3,7 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const yaml = require('js-yaml');
-const Wskey = require("nodeauth/src/Wskey");
+const Wskey = require("nodeauth/src/wskey");
 const User = require("nodeauth/src/user");
 
 const Bib = require("./bib.js")
