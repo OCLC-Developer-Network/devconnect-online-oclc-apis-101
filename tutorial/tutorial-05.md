@@ -1,5 +1,5 @@
-# A Beginner's Guide to Working with WorldShare APIs
-## OCLC WMS Global Community + User Group Meeting 2017: Pre-Conference Workshop
+# A Beginner's Guide to Working with OCLC APIs
+## OCLC DEVCONNECT 2018: Pre-Conference Workshop
 ### Tutorial Part 5 - Creating Models Using Test Driven Development
 
 #### Test Setup
