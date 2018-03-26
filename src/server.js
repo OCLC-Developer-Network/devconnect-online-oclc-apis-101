@@ -35,9 +35,8 @@ let autheMiddleware = express.Router()
 
 const context = this;
 
-autheMiddleware.post('/bib', function (req, res, next) {
-	if (context.accessToken && context.accessToken.getAccessTokenString()){
-		console.log('I think there is an Access Token')
+function getAccessToken (req, res, next){
+	if (context.accessToken && context.accessToken.getAccessTokenString() && !context.accessToken.isExpired()){
 		next()
 	}else {
 		// request an Access Token
@@ -49,27 +48,18 @@ autheMiddleware.post('/bib', function (req, res, next) {
 	        .catch(function (err) {
 	            //catch the error
 	        	console.log(err);
-	        	//res.render('display-error', {error: error.getCode(), error_message: error.getMessage(), error_detail: error.getDetail(), oclcnumber: id});
+	        	let error = new Error(err);
+	        	res.render('display-error', {error: error.getCode(), error_message: error.getMessage(), error_detail: error.getDetail()});
 	        })
 	}
+}
+
+autheMiddleware.post('/bib', function (req, res, next) {
+	getAccessToken(req, res, next);
 });
 
 autheMiddleware.get('/bib/:id', function (req, res, next) {
-	if (context.accessToken && context.accessToken.getAccessTokenString()){
-		next()
-	}else {
-		// request an Access Token
-		wskey.getAccessTokenWithClientCredentials(config['prod']['institution'], config['prod']['institution'], user)
-	        .then(function (accessToken) {
-	            context.accessToken = accessToken;
-	            next();
-	        })
-	        .catch(function (err) {
-	            //catch the error
-	        	console.log(err);
-	        	//res.render('display-error', {error: error.getCode(), error_message: error.getMessage(), error_detail: error.getDetail(), oclcnumber: id});
-	        })
-	}
+	getAccessToken(req, res, next);
 });
 
 app.use('/', autheMiddleware);
