@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<error><code type="http">403</code><message>AccessToken {tk_12345} does not have access to service {WorldCatMetadataAPI}</message><detail>Authorization header: Bearer tk_12345</detail></error>
