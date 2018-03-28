@@ -20,6 +20,8 @@
   "license": "Apache 2.0",
   "devDependencies": {
     "chai": "^4.1.2",
+    "cucumber": "^4.0.0",
+    "cucumber-mink": "^2.0.0",    
     "mocha": "^5.0.1",
     "moxios": "^0.4.0",
     "nodemon": "^1.17.1",
@@ -33,6 +35,7 @@
     "express": "^4.16.2",
     "js-yaml": "^3.10.0",
     "marc4js": "0.0.9",
+    "nodeauth": "git+https://github.com/OCLC-Developer-Network/oclc-auth-node.git",    
     "read-yaml": "^1.1.0",
     "string": "^3.3.3",
     "xmldom": "^0.1.27",
@@ -46,7 +49,7 @@
 ```bash
 $ mkdir src
 $ mkdir views
-$ mkdir tests
+$ mkdir test
 ```
 7. Run NPM to install your dependencies:
 ```bash
