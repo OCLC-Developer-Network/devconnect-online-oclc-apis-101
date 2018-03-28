@@ -1,7 +1,8 @@
 <%- include('header.html') -%>
+<h1>Search by OCLC Number</h1>
 <form action="<%= action %>" method="POST">
     <p><label>OCLC Number:</label> <input type="text" name="oclcnumber" /></p>
     </p>
-    <input type="submit" value="Search" />
+    <input type="submit" name="search" value="Search"/>
 </form>
 <%- include('footer.html') -%>
