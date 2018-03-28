@@ -5,6 +5,8 @@ var http = require('http');
 
 const BibError = require('../src/BibError');
 const error_response = fs.readFileSync(require('path').resolve(__dirname, './mocks/errorResponse.xml')).toString();
+const error_response_403 = fs.readFileSync(require('path').resolve(__dirname, './mocks/errorResponse_403.xml')).toString();
+const error_response_404 = fs.readFileSync(require('path').resolve(__dirname, './mocks/errorResponse_404.xml')).toString();
 const Bib = require('../src/Bib');
 
 const error_mock = require('./mocks/errorMock')
@@ -44,13 +46,13 @@ describe('API Error tests', () => {
 	  moxios.uninstall();
   });
 
-  it('Returns a Error from an HTTP request', () => {
-	  moxios.stubRequest('https://worldcat.org/bib/data/12345', {
+  it('Returns a 401 Error from an HTTP request', () => {
+	  moxios.stubRequest('https://worldcat.org/bib/data/401', {
 		  status: 401,
 		  responseText: error_response
 	  });
 	  
-    return Bib.find('12345', 'tk_12345')
+    return Bib.find('401', 'tk_12345')
       .catch(error => {
         //expect an Error object back
         expect(error).to.be.an.instanceof(BibError);
@@ -61,4 +63,41 @@ describe('API Error tests', () => {
         
       });
   });
+  
+  it('Returns a 403 Error from an HTTP request', () => {
+	  moxios.stubRequest('https://worldcat.org/bib/data/403', {
+		  status: 403,
+		  responseText: error_response_403
+	  });
+	  
+    return Bib.find('403', 'tk_12345')
+      .catch(error => {
+        //expect an Error object back
+        expect(error).to.be.an.instanceof(BibError);
+        expect(error.getRequestError()).to.be.an.instanceof(Error);
+        expect(error.getCode()).to.equal(403);
+        expect(error.getMessage()).to.equal('AccessToken {tk_12345} does not have access to service {WorldCatMetadataAPI}');
+        expect(error.getDetail()).to.equal('Authorization header: Bearer tk_12345');
+        
+      });
+  });  
+  
+  it('Returns a 404 Error from an HTTP request', () => {
+  	  moxios.stubRequest('https://worldcat.org/bib/data/404', {
+  		  status: 404,
+  		  responseText: error_response_404
+  	  });
+  	  
+      return Bib.find('404', 'tk_12345')
+        .catch(error => {
+          //expect an Error object back
+          expect(error).to.be.an.instanceof(BibError);
+          expect(error.getRequestError()).to.be.an.instanceof(Error);
+          expect(error.getCode()).to.equal(404);
+          expect(error.getMessage()).to.equal('Unable to locate resource: 404.');
+          expect(error.getDetail()).undefined;
+          
+        });
+    });   
+    
 });
