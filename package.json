@@ -6,8 +6,9 @@
   "scripts": {
     "start": "nodemon local.js",
     "deploy": "serverless deploy",
-    "test": "node_modules/.bin/mocha",
-    "test_server": "nodemon test.js"
+    "test": "mocha",
+    "test_server": "nodemon test.js",
+    "cucumber_tests": "cucumber-js test/features"
   },
   "keywords": [],
   "author": "",
