@@ -19,10 +19,10 @@
 
 
 #### Folders for Testing
-1. Tests directory
+1. Test directory
     - we've created this already
     - holds our unit tests
-2. Feature directory
+2. Feature directory in test directory
     - We'll create this later
     - holds our automated behavior-driven acceptance tests
 
