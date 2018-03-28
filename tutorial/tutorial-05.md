@@ -6,7 +6,7 @@
 1. Open package.json
 2. Add line to scripts section to run tests
 ```
-    "test": "node_modules/.bin/mocha"
+    "test": "mocha"
 ```
 
 3. Create a directory within `tests` called `mocks`
@@ -14,6 +14,10 @@
         1. [bibResponse](https://raw.githubusercontent.com/OCLC-Developer-Network/devconnect2018precon/master/tests/mocks/bibResponse.xml)
         2. [errorMock](https://raw.githubusercontent.com/OCLC-Developer-Network/devconnect2018precon/master/tests/mocks/errorMock.js)
         3. [errorResponse](https://raw.githubusercontent.com/OCLC-Developer-Network/devconnect2018precon/master/tests/mocks/errorResponse.xml)
+        4. [errorResponse_403](https://raw.githubusercontent.com/OCLC-Developer-Network/devconnect2018precon/master/tests/mocks/errorResponse_403.xml)
+        5. [errorResponse_404](https://raw.githubusercontent.com/OCLC-Developer-Network/devconnect2018precon/master/tests/mocks/errorResponse_404.xml)
+        6. [access_token_response](https://raw.githubusercontent.com/OCLC-Developer-Network/devconnect2018precon/master/tests/mocks/access_token.json)
+        
         
 
 #### Write your first test
@@ -456,7 +460,7 @@ npm test
 ```   
 
 #### Test that an API error can be properly parsed
-1. Create test for parsing API error
+1. Create tests for parsing API errors
     1. Tell tests what file to use for mocks
     2. Call Bib::find in a failed fashion
     3. Test error is an instance of BibError
@@ -474,7 +478,7 @@ describe('API Error tests', () => {
       moxios.uninstall();
   });
 
-  it('Returns a Error from an HTTP request', () => {
+  it('Returns a 401 Error from an HTTP request', () => {
       moxios.stubRequest('https://worldcat.org/bib/data/12345', {
           status: 401,
           responseText: error_response
@@ -491,6 +495,42 @@ describe('API Error tests', () => {
         
       });
   });
+  
+    it('Returns a 403 Error from an HTTP request', () => {
+      moxios.stubRequest('https://worldcat.org/bib/data/403', {
+          status: 403,
+          responseText: error_response_403
+      });
+      
+    return Bib.find('403', 'tk_12345')
+      .catch(error => {
+        //expect an Error object back
+        expect(error).to.be.an.instanceof(BibError);
+        expect(error.getRequestError()).to.be.an.instanceof(Error);
+        expect(error.getCode()).to.equal(403);
+        expect(error.getMessage()).to.equal('AccessToken {tk_12345} does not have access to service {WorldCatMetadataAPI}');
+        expect(error.getDetail()).to.equal('Authorization header: Bearer tk_12345');
+        
+      });
+  });  
+  
+  it('Returns a 404 Error from an HTTP request', () => {
+      moxios.stubRequest('https://worldcat.org/bib/data/404', {
+          status: 404,
+          responseText: error_response_404
+      });
+      
+      return Bib.find('404', 'tk_12345')
+        .catch(error => {
+          //expect an Error object back
+          expect(error).to.be.an.instanceof(BibError);
+          expect(error.getRequestError()).to.be.an.instanceof(Error);
+          expect(error.getCode()).to.equal(404);
+          expect(error.getMessage()).to.equal('Unable to locate resource: 404.');
+          expect(error.getDetail()).undefined;
+          
+        });
+    });
 });
 ```
 
