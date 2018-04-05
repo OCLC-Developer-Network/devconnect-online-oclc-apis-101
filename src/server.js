@@ -1,8 +1,6 @@
 "use strict";
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs');
-const yaml = require('js-yaml');
 const Wskey = require("nodeauth/src/wskey");
 const User = require("nodeauth/src/user");
 
@@ -11,14 +9,12 @@ const BibError = require("./BibError.js")
 
 const isLambda = !!(process.env.LAMBDA_TASK_ROOT || false);
 
-const config = yaml.load(fs.readFileSync(require('path').resolve(__dirname, '../config.yml')).toString());
-
 const options = {
-    services: ["WorldCatMetadataAPI"]
-};
+		    services: ["WorldCatMetadataAPI"]
+		};
 
-const user = new User(config['prod']['institution'], config['prod']['principalID'], config['prod']['principalIDNS']);
-const wskey = new Wskey(config['prod']['wskey'], config['prod']['secret'], options);
+const user = new User(config['institution'], config['principalID'], config['principalIDNS']);
+const wskey = new Wskey(config['wskey'], config['secret'], options);
 
 const app = express();
 
@@ -40,7 +36,7 @@ function getAccessToken (req, res, next){
 		next()
 	}else {
 		// request an Access Token
-		wskey.getAccessTokenWithClientCredentials(config['prod']['institution'], config['prod']['institution'], user)
+		wskey.getAccessTokenWithClientCredentials(config['institution'], config['institution'], user)
 	        .then(function (accessToken) {
 	            context.accessToken = accessToken;
 	            next();
