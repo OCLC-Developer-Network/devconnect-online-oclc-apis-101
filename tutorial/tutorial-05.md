@@ -17,8 +17,6 @@
         4. [errorResponse_403](https://raw.githubusercontent.com/OCLC-Developer-Network/devconnect2018precon/master/tests/mocks/errorResponse_403.xml)
         5. [errorResponse_404](https://raw.githubusercontent.com/OCLC-Developer-Network/devconnect2018precon/master/tests/mocks/errorResponse_404.xml)
         6. [access_token_response](https://raw.githubusercontent.com/OCLC-Developer-Network/devconnect2018precon/master/tests/mocks/access_token.json)
-        
-        
 
 #### Write your first test
 

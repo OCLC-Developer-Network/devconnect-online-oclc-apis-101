@@ -3,8 +3,8 @@
 ### Tutorial Part 6 - Framework fundementals
 
 #### Configuration
-1. In project root create file config.yml
-2. Edit config.yml so it contains a set of key value pairs with:
+1. In project root create file prod_config.yml
+2. Edit prod_config.yml so it contains a set of key value pairs with:
     - wskey key
     - wskey secret
     - principalID
@@ -12,12 +12,11 @@
     - institution registry ID
 	
 ```
-prod:
-    wskey: test
-    secret: secret
-    principalID: id 
-    principalIDNS: namespace
-    institution: 128807
+wskey: test
+secret: secret
+principalID: id 
+principalIDNS: namespace
+institution: 128807
 ```
 
 #### Creating the Application Entry point
@@ -28,8 +27,6 @@ prod:
 "use strict";
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs');
-const yaml = require('js-yaml');
 const Wskey = require("nodeauth/src/wskey");
 const User = require("nodeauth/src/user");
 
@@ -55,14 +52,36 @@ app.use(express.static('public'));
 module.exports = app;
 ```
 
+#### Create code to load configuration information
+1. In src folder create a file called config.js
+2. Open config.js
+    1. Create a function that loads the configuration data file as a string based on the environment
+    
+    ```
+    "use strict";
+    const fs = require('fs');
+
+    module.exports = function get_config(environment) {
+        return yaml.load(fs.readFileSync(require('path').resolve(__dirname, '../' + environment + '_config.yml')).toString());
+    };        
+    ```
+
 #### Create local configuration for running application
 1. In project root create a file called local.js
 2. Open local.js
-    1. Require src/server.js
-    2. Tell application what port to run on
-    3. Log what application is doing
+    1. Require yaml parsing library 
+    2. Require src/config.js
+    3. Set the environment
+    4. Load the configuration 
+    5. Require src/server.js
+    3. Tell application what port to run on
+    4. Log what application is doing
 
 ```
+const yaml = require('js-yaml');
+const get_config = require("./src/config.js");
+let environment = 'prod';
+global.config = yaml.load(get_config(environment));
 let app = require('./src/server.js');
 let port = process.env.PORT || 8000;
 
@@ -70,6 +89,7 @@ let port = process.env.PORT || 8000;
 app.listen(port, () => {
     console.log(`Listening on: http://localhost:${port}`);
 });
+        
 ```
 
 #### Add script for starting app to package.json
@@ -86,25 +106,22 @@ The idea behind middleware is to allow us to intercept any request and tell the 
 In this case we're the application that anytime this function is called it should perform authentication BEFORE the client request.
 
 1. Open server.js
-2. Add authenication setup
-    1. Add configuration file 
-    2. instantiate user and wskey objects
-    3. create access token variable
+2. Add authentication setup
+    1. instantiate user and wskey objects
+    2. create access token variable
     
 
 ```
-const config = yaml.load(fs.readFileSync(require('path').resolve(__dirname, '../config.yml')).toString());
 
 const options = {
     services: ["WorldCatMetadataAPI"]
 };
 
-const user = new User(config['prod']['institution'], config['prod']['principalID'], config['prod']['principalIDNS']);
-const wskey = new Wskey(config['prod']['wskey'], config['prod']['secret'], options);
+const user = new User(config['institution'], config['principalID'], config['principalIDNS']);
+const wskey = new Wskey(config['wskey'], config['secret'], options);
 
 this.accessToken = null;
 ```
-
 
 3. Create a variable called autheMiddleware to hold the middleware which performs authentication.
 
@@ -142,7 +159,7 @@ function getAccessToken (req, res, next){
         next()
     }else {
         // request an Access Token
-        wskey.getAccessTokenWithClientCredentials(config['prod']['institution'], config['prod']['institution'], user)
+        wskey.getAccessTokenWithClientCredentials(config['institution'], config['institution'], user)
             .then(function (accessToken) {
                 context.accessToken = accessToken;
                 next();

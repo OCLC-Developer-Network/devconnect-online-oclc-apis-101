@@ -59,8 +59,13 @@ $ npm install
 	1. To tell git to ignore the `/node_modules/` directory, create a `.gitignore` file:
 		1. `$ touch .gitignore`
 	2. Open `.gitignore` in your text editor.
-	3. Copy and paste [this text](https://github.com/OCLC-Developer-Network/devconnnect2018precon/blob/master/.gitignore) into the file.
-		1. (This includes a few resources other than `/node_modules/`, but we'll get to those later. :wink:)
+	3. Add the following lines
+	   1. (This includes a few resources other than `/node_modules/`, but we'll get to those later. :wink:)
+	   ```
+        /node_modules/
+        /.project
+        /config.yml
+	   ```
 	4. Save the file.
 9. We're now ready to commit our changes to GitHub. To view local changes not yet commited, enter this command:
 	1. `$ git status`

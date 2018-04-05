@@ -39,6 +39,8 @@ mink.gherkin(cucumber);
 
 ```
 const fs = require('fs');
+const yaml = require('js-yaml');
+const get_config = require("./src/config.js");
 const moxios = require('moxios');
 const access_token = fs.readFileSync(require('path').resolve(__dirname, 'test/mocks/access_token.json')).toString();
 const bib_response = fs.readFileSync(require('path').resolve(__dirname, 'test/mocks/bibResponse.xml')).toString();
@@ -75,13 +77,25 @@ moxios.stubRequest('https://worldcat.org/bib/data/404', {
       responseText: error_response_404
 });
 
-let app = require('./src/server.js');
-let port = process.env.PORT || 8000;
+let environment = "test";
 
-// Server
-app.listen(port, () => {
-    console.log(`Listening on: http://localhost:${port}`);
-});
+const decrypt = require("./src/config.js");
+global.config = "";
+get_config(environment)
+    .then(function (output){
+        global.config = yaml.load(output);
+        let app = require('./src/server.js');
+        let port = process.env.PORT || 8000;
+
+        // Server
+        app.listen(port, () => {
+            console.log(`Listening on: http://localhost:${port}`);
+        });
+        
+    })
+    .catch(function (err){
+        throw ('Config failed to load' + err);
+    });
 ```
 
 ### Add scripts to start test server and run tests
@@ -189,11 +203,11 @@ app.listen(port, () => {
 #### Running Tests
 1. Start the built-in node server with the test configuration
 ```bash
-$ npm run-script test_server
+$ npm run test_server
 ```
 2. Run tests
 ```bash
-$ npm run-script cucumber_tests
+$ npm run cucumber_tests
 ```
 
 **[on to Part 14](tutorial-14.md)**
