@@ -311,8 +311,8 @@ npm test
 ```       
 
 #### Write the first test for the BibError Class
-1. In tests directory create a file named error.test.php to test your BibError Class 
-2. Open error.test.php and add constants for classes you want to use (WSKey and Access Token)
+1. In tests directory create a file named error.test.js to test your BibError Class 
+2. Open error.test.js and add constants for classes you want to use (WSKey and Access Token)
 
 ```
 const expect = require('chai').expect;
@@ -346,7 +346,7 @@ describe('Create Error test', () => {
 
 6. Make the test pass by creating BibError class and constructor
     1. In the src directory create a file named BibError.js to represent the BibError Class
-    2. Open BibError.php and declare BibError class
+    2. Open BibError.js and declare BibError class
     ```
     const xpath = require('xpath');
     const dom = require('xmldom').DOMParser;
@@ -411,7 +411,7 @@ npm test
 ```
 
 2. Write code for getting a request error
-```php
+```
     function getRequestError()
     {
         return $this->requestError;
