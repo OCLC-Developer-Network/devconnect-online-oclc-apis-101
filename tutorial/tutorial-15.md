@@ -5,7 +5,8 @@
 #### Get AWS Credentials
 
 #### Encrypt your credentials
-1. Create a KMS key in AWS
+1. Create a KMS key in AWS - https://console.aws.amazon.com/iam
+    1. Use the encryption keys link
 2. Copy your KMS key
 3. Encrypt your yml file with AWS commandline tools
     - make sure you are in the root project directory
@@ -53,9 +54,6 @@ aws kms encrypt --key-id {kms_key_id} --plaintext fileb://test_config.yml --outp
         })
     });
     ```
-    
-#### Update CI to handle credentials
-
 
 #### Get Serverless working
 1. In the project root create a files named lambda.js
@@ -77,6 +75,8 @@ service: devnetconnect-workshop-node-app
 package:
   exclude:
     - config.yml
+    - test_config.yml
+    - test_config_encrypted.yml
     - local.js
     - .gitignore
     - .git/**
