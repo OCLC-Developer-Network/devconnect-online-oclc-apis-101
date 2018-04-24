@@ -11,8 +11,9 @@
 	4. Dependency management via [NPM](https://www.npmjs.com)
 	5. An external [Node library for parsing MARC records](https://github.com/jiaola/marc4js)
 	6. Unit testing via [Mocha](https://mochajs.org/) and [Chai](http://www.chaijs.com/)
-	7. Behavior-driven testing via [Jasmine](https://jasmine.github.io/)
+	7. Behavior-driven testing via [Cucumber-JS](https://github.com/cucumber/cucumber-js)
 	8. Continuous integration testing via [Travis CI](https://travis-ci.org/)
+	9. Hosted code via [AWS Lambda](https://aws.amazon.com/lambda)
 
 **[on to Part 2](tutorial-02.md)**
 
