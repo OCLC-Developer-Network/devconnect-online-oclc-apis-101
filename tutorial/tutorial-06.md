@@ -155,13 +155,13 @@ autheMiddleware.post('/bib/:id', function (req, res, next) {
     
 ```   
 function getAccessToken (req, res, next){ 
-    if (context.accessToken && context.accessToken.getAccessTokenString()){
+    if (app.get('accessToken') && app.get('accessToken').getAccessTokenString() && !app.get('accessToken').isExpired()){
         next()
     }else {
         // request an Access Token
         wskey.getAccessTokenWithClientCredentials(config['institution'], config['institution'], user)
             .then(function (accessToken) {
-                context.accessToken = accessToken;
+                app.set('accessToken', accessToken);
                 next();
             })
             .catch(function (err) {

@@ -17,8 +17,6 @@ const wskey = new nodeauth.Wskey(config['wskey'], config['secret'], options);
 
 const app = express();
 
-this.accessToken = null;
-
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.set('views', 'views'); 
@@ -31,13 +29,13 @@ let autheMiddleware = express.Router()
 const context = this;
 
 function getAccessToken (req, res, next){
-	if (context.accessToken && context.accessToken.getAccessTokenString() && !context.accessToken.isExpired()){
+	if (app.get('accessToken') && app.get('accessToken').getAccessTokenString() && !app.get('accessToken').isExpired()){
 		next()
 	}else {
 		// request an Access Token
 		wskey.getAccessTokenWithClientCredentials(config['institution'], config['institution'], user)
 	        .then(function (accessToken) {
-	            context.accessToken = accessToken;
+	        	app.set('accessToken', accessToken);
 	            next();
 	        })
 	        .catch(function (err) {
@@ -72,7 +70,7 @@ app.get('/', (req, res) => {
 
 app.post('/bib', (req, res, next) => {
 	var id = req.body.oclcnumber;
-	Bib.find(id, context.accessToken.getAccessTokenString())
+	Bib.find(id, app.get('accessToken').getAccessTokenString())
 	.then(bib => {
 		bib.getRecordAsString()
 		.then(function (output){
@@ -91,7 +89,7 @@ app.post('/bib', (req, res, next) => {
 app.get('/bib/:id', (req, res, next) => {
 	var id = req.params['id'];
 	
-	Bib.find(id, context.accessToken.getAccessTokenString())
+	Bib.find(id, app.get('accessToken').getAccessTokenString())
 		.then(bib => {
 			bib.getRecordAsString()
 			.then(function (output){

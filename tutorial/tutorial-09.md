@@ -16,7 +16,8 @@ res.render('display-bib');
 4. Use the Bib class to find the record
 
 ```
-    Bib.find(id, accessToken)
+    var id = req.params['id'];
+    Bib.find(id, app.get('accessToken').getAccessTokenString())
         .then(bib => {
             bib.getRecordAsString()
             .then(function (output){
@@ -44,7 +45,8 @@ res.render('display-bib');
 7. Use the Bib class to find the record
 
 ```
-    Bib.find(id, accessToken)
+    var id = req.body.oclcnumber;
+    Bib.find(id, app.get('accessToken').getAccessTokenString())
         .then(bib => {
             bib.getRecordAsString()
             .then(function (output){
