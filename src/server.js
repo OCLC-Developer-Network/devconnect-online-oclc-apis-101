@@ -1,8 +1,7 @@
 "use strict";
 const express = require('express');
 const bodyParser = require('body-parser');
-const Wskey = require("nodeauth/src/wskey");
-const User = require("nodeauth/src/user");
+const nodeauth = require("nodeauth");
 
 const Bib = require("./bib.js")
 const BibError = require("./BibError.js")
@@ -13,8 +12,8 @@ const options = {
 		    services: ["WorldCatMetadataAPI"]
 		};
 
-const user = new User(config['institution'], config['principalID'], config['principalIDNS']);
-const wskey = new Wskey(config['wskey'], config['secret'], options);
+const user = new nodeauth.User(config['institution'], config['principalID'], config['principalIDNS']);
+const wskey = new nodeauth.Wskey(config['wskey'], config['secret'], options);
 
 const app = express();
 
@@ -43,8 +42,7 @@ function getAccessToken (req, res, next){
 	        })
 	        .catch(function (err) {
 	            //catch the error
-	        	console.log(err);
-	        	let error = new Error(err);
+	        	let error = new BibError(err);
 	        	res.render('display-error', {error: error.getCode(), error_message: error.getMessage(), error_detail: error.getDetail()});
 	        })
 	}
