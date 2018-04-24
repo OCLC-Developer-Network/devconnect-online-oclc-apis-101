@@ -40,7 +40,7 @@
 2. Add error template to the catch block
 
 ```
-    let error = new Error(err);
+    let error = new BibError(err);
     res.render('display-error', {error: error.getCode(), error_message: error.getMessage(), error_detail: error.getDetail()});
 ```
 
