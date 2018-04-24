@@ -108,7 +108,6 @@ In this case we're the application that anytime this function is called it shoul
 1. Open server.js
 2. Add authentication setup
     1. instantiate user and wskey objects
-    2. create access token variable
     
 
 ```
@@ -120,7 +119,6 @@ const options = {
 const user = new nodeauth.User(config['institution'], config['principalID'], config['principalIDNS']);
 const wskey = new nodeauth.Wskey(config['wskey'], config['secret'], options);
 
-this.accessToken = null;
 ```
 
 3. Create a variable called autheMiddleware to hold the middleware which performs authentication.
@@ -149,7 +147,7 @@ autheMiddleware.post('/bib/:id', function (req, res, next) {
     - institution from your config file as context institution
     - user variable as the user
     3. If an Access Token is retrieved 
-        1. set it to the context.accessToken variable
+        1. set it to the application accessToken variable
         2. continue on the way
     4. if no access token can be retrieved, show error screen     
     
