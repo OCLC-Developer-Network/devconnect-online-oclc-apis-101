@@ -1,0 +1,27 @@
+sudo: required
+language: node_js
+node_js: "8"
+
+cache:
+  directories:
+- node_modules
+
+install:
+  - npm install -g npm
+  - npm install
+
+before_script:
+  - npm run-script test_server &
+  - sleep 2
+
+script:
+  - npm test
+  - npm run cucumber_tests
+
+# configure notifications (email, IRC, campfire etc)
+notifications:
+    email:
+        recipients:
+        - coombsk@oclc.org
+        on_success: always
+        on_failure: always
