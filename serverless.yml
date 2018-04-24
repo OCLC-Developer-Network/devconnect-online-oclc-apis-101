@@ -1,0 +1,24 @@
+service: devnetconnect-workshop-node-app
+
+package:
+  exclude:
+    - config.yml
+    - test_config.yml
+    - test_config_encrypted.yml
+    - local.js
+    - .gitignore
+    - .git/**
+provider:
+ name: aws
+ runtime: nodejs6.10
+ memorySize: 128
+ timeout: 10
+ stage: production
+ region: us-east-1
+
+functions:
+ api:
+   handler: lambda.universal
+   events:
+     - http: ANY {proxy+}
+     - http: ANY /
