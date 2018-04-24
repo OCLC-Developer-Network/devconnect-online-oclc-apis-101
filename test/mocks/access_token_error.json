@@ -1,0 +1,8 @@
+{
+  "code": {
+    "type": "http",
+    "value": "401"
+  },
+  "details": "Authorization header: http://www.worldcat.org/wskey/v2/hmac/v1 clientId=\"test\", timestamp=\"1524513365\", nonce=\"a2b79385\", signature=\"yS+aKqSbJ2PjL9S5AuA5zqo+t2QfWLl8W9wWbACnFMk=\", principalID=\"id\", principalIDNS=\"namespace\"",
+  "message": "WSKey 'test' is invalid"
+}
