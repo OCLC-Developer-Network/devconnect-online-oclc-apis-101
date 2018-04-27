@@ -1,15 +1,21 @@
 const expect = require('chai').expect;
+const nock = require('nock');
 const moxios = require('moxios');
 const fs = require('fs');
-var http = require('http');
+const yaml = require('js-yaml');
+const get_config = require("../src/config.js");
+
+global.config = yaml.load(get_config("test"));
 
 const BibError = require('../src/BibError');
 const error_response = fs.readFileSync(require('path').resolve(__dirname, './mocks/errorResponse.xml')).toString();
 const error_response_403 = fs.readFileSync(require('path').resolve(__dirname, './mocks/errorResponse_403.xml')).toString();
 const error_response_404 = fs.readFileSync(require('path').resolve(__dirname, './mocks/errorResponse_404.xml')).toString();
+const access_token_error = fs.readFileSync(require('path').resolve(__dirname, './mocks/access_token.json')).toString();
 const Bib = require('../src/Bib');
 
-const error_mock = require('./mocks/errorMock')
+const error_mock = require('./mocks/errorMock');
+const accesstoken_error_mock = require('./mocks/accessTokenErrorMock');
 
 describe('Create Error test', () => {
 	var error;
@@ -37,7 +43,32 @@ describe('Create Error test', () => {
 	  
 	});
 
-describe('API Error tests', () => {
+describe.skip('Create Error from Access Token test', () => {
+	var error;
+	  before(() => {
+		  	error = new BibError(accesstoken_error_mock);
+		  });
+	  
+	  it('Creates an Error object', () => {
+		  expect(error).to.be.an.instanceof(BibError);
+	  });
+	  
+	  it('Sets the Error properties', () => {
+        expect(error.error).to.be.an.instanceof(Error);
+        expect(error.code).to.equal(401)
+        expect(error.message).to.equal('Authentication failure. Missing or invalid authorization token.')
+	  });
+	  
+	  it('Has functioning getters', () => {
+        expect(error.getRequestError()).to.be.an.instanceof(Error);
+        expect(error.getCode()).to.equal(401)
+        expect(error.getMessage()).to.equal('Authentication failure. Missing or invalid authorization token.')
+	  });
+	  
+	});
+
+
+describe.only('API Error tests', () => {
   beforeEach(() => {
 	  moxios.install();
   });
@@ -98,6 +129,6 @@ describe('API Error tests', () => {
           expect(error.getDetail()).undefined;
           
         });
-    });   
+    });
     
 });
