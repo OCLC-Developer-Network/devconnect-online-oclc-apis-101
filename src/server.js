@@ -41,7 +41,7 @@ function getAccessToken (req, res, next){
 	        .catch(function (err) {
 	            //catch the error
 	        	let error = new BibError(err);
-	        	res.render('display-error', {error: error.getCode(), error_message: error.getMessage(), error_detail: error.getDetail()});
+	        	res.render('display-error', {error: error.getCode(), error_message: error.getMessage(), error_detail: error.getDetail(), oclcnumber: null});
 	        })
 	}
 }
