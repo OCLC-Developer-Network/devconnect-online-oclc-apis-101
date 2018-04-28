@@ -43,7 +43,7 @@ describe('Create Error test', () => {
 	  
 	});
 
-describe.skip('Create Error from Access Token test', () => {
+describe('Create Error from Access Token test', () => {
 	var error;
 	  before(() => {
 		  	error = new BibError(accesstoken_error_mock);
@@ -56,19 +56,21 @@ describe.skip('Create Error from Access Token test', () => {
 	  it('Sets the Error properties', () => {
         expect(error.error).to.be.an.instanceof(Error);
         expect(error.code).to.equal(401)
-        expect(error.message).to.equal('Authentication failure. Missing or invalid authorization token.')
+        expect(error.message).to.equal("WSKey 'test' is invalid")
+        expect(error.detail).to.equal("Authorization header: http://www.worldcat.org/wskey/v2/hmac/v1 clientId=\"test\", timestamp=\"1524513365\", nonce=\"a2b79385\", signature=\"yS+aKqSbJ2PjL9S5AuA5zqo+t2QfWLl8W9wWbACnFMk=\", principalID=\"id\", principalIDNS=\"namespace\"")
 	  });
 	  
 	  it('Has functioning getters', () => {
         expect(error.getRequestError()).to.be.an.instanceof(Error);
         expect(error.getCode()).to.equal(401)
-        expect(error.getMessage()).to.equal('Authentication failure. Missing or invalid authorization token.')
+        expect(error.getMessage()).to.equal("WSKey 'test' is invalid")
+        expect(error.getDetail()).to.equal("Authorization header: http://www.worldcat.org/wskey/v2/hmac/v1 clientId=\"test\", timestamp=\"1524513365\", nonce=\"a2b79385\", signature=\"yS+aKqSbJ2PjL9S5AuA5zqo+t2QfWLl8W9wWbACnFMk=\", principalID=\"id\", principalIDNS=\"namespace\"")
 	  });
 	  
 	});
 
 
-describe.only('API Error tests', () => {
+describe('API Error tests', () => {
   beforeEach(() => {
 	  moxios.install();
   });
