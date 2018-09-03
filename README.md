@@ -1,4 +1,4 @@
-DEVCONNECT 2018 preconference Application
+DEVCONNECT Online 2018 - Introductory Application
 =============
 This is a demonstration application written to how to interact with OCLC web service in Node.js. It uses best programming practices like 
 - dependency management
