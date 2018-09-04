@@ -17,7 +17,7 @@ In a Terminal Window
 ```bash
 $ cd {yourGitHomeDirectory}
 $ git clone https://github.com/OCLC-Developer-Network/devconnect-online-oclc-apis-101.git
-$ cd devconnect2018precon
+$ cd devconnect-online-oclc-apis-101
 ```
 
 ### Step 2: Use npm to install the dependencies
@@ -79,5 +79,5 @@ $ npm run cucumber_tests
 
 ## How this was built
 
-For a step by step tutorial on this application see the [tutorial section](https://github.com/OCLC-Developer-Network/devconnect2018precon/tree/master/tutorial)
+For a step by step tutorial on this application see the [tutorial section](https://github.com/OCLC-Developer-Network/devconnect-online-oclc-apis-101/tree/master/tutorial)
 
