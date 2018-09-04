@@ -16,7 +16,7 @@ In a Terminal Window
 
 ```bash
 $ cd {yourGitHomeDirectory}
-$ git clone https://github.com/OCLC-Developer-Network/devconnect2018precon.git
+$ git clone https://github.com/OCLC-Developer-Network/devconnect-online-oclc-apis-101.git
 $ cd devconnect2018precon
 ```
 
