@@ -7,6 +7,7 @@
 #### Encrypt your credentials
 1. Create a KMS key in AWS - https://console.aws.amazon.com/iam
     1. Use the encryption keys link
+    2. Create a new key
 2. Copy your KMS key
 3. Encrypt your yml file with AWS commandline tools
     - make sure you are in the root project directory
@@ -60,11 +61,24 @@ aws kms encrypt --key-id {kms_key_id} --plaintext fileb://test_config.yml --outp
 2. Open lambda.js and add the following
 ```
 const awsServerlessExpress = require('aws-serverless-express');
-const app = require('./src/server');
-const server = awsServerlessExpress.createServer(app)
+const yaml = require('js-yaml');
+const get_config = require("./src/config.js");
+let environment = 'prod';
 
+global.config = "";
 
-module.exports.universal = (event, context) => awsServerlessExpress.proxy(server, event, context);
+module.exports.universal = function(event, context){
+    get_config('prod')
+    .then(function (output){
+        global.config = yaml.load(output);
+        let app = require('./src/server.js');       
+        const server = awsServerlessExpress.createServer(app)
+        return awsServerlessExpress.proxy(server, event, context);
+    })
+    .catch(function (err){
+        throw ('Config failed to load' + err);
+    });
+}
 ```
 
 2. Create a serverless.yml file
@@ -82,7 +96,7 @@ package:
     - .git/**
 provider:
  name: aws
- runtime: nodejs6.10
+ runtime: nodejs8.10
  memorySize: 128
  timeout: 10
  stage: production
@@ -105,5 +119,21 @@ functions:
 ```bash
 npm deploy
 ```
+Make sure you note the URL for where the application is deployed
+
+5. Ensure the role running the Lambda can access decryption key
+    1. Go into the AWS Console - Lambda (https://console.aws.amazon.com/lambda)
+    2. Find the Execution role - likely named devconnect-demo-node-app-production
+    3. Go to the AWS Console - IAM (https://console.aws.amazon.com/iam)
+    4. Choose Roles
+    5. Choose the name of the execution role
+    6. Edit policy
+    7. Add permissions
+    - Read (all actions)
+    - List - ListKeys
+    - Write - Decrypt
+    8. Save
+6. Go to the url and view the deployed application
+     
 
 **[back to Part 14](tutorial-14.md)**
