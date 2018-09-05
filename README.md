@@ -1,4 +1,4 @@
-DEVCONNECT 2018 preconference Application
+DEVCONNECT Online 2018 - Introductory Application
 =============
 This is a demonstration application written to how to interact with OCLC web service in Node.js. It uses best programming practices like 
 - dependency management
@@ -16,8 +16,8 @@ In a Terminal Window
 
 ```bash
 $ cd {yourGitHomeDirectory}
-$ git clone https://github.com/OCLC-Developer-Network/devconnect2018precon.git
-$ cd devconnect2018precon
+$ git clone https://github.com/OCLC-Developer-Network/devconnect-online-oclc-apis-101.git
+$ cd devconnect-online-oclc-apis-101
 ```
 
 ### Step 2: Use npm to install the dependencies
@@ -79,5 +79,5 @@ $ npm run cucumber_tests
 
 ## How this was built
 
-For a step by step tutorial on this application see the [tutorial section](https://github.com/OCLC-Developer-Network/devconnect2018precon/tree/master/tutorial)
+For a step by step tutorial on this application see the [tutorial section](https://github.com/OCLC-Developer-Network/devconnect-online-oclc-apis-101/tree/master/tutorial)
 
