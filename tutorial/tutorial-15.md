@@ -110,18 +110,13 @@ functions:
      - http: ANY /
 ```
 
-3. Add a deploy script to your package.json
-```
-    "deploy": "serverless deploy",
-```
-
-4. Deploy your code
+3. Deploy your code
 ```bash
-npm deploy
+serverless deploy
 ```
 Make sure you note the URL for where the application is deployed
 
-5. Ensure the role running the Lambda can access decryption key
+4. Ensure the role running the Lambda can access decryption key
     1. Go into the AWS Console - Lambda (https://console.aws.amazon.com/lambda)
     2. Find the Execution role - likely named devconnect-demo-node-app-production
     3. Go to the AWS Console - IAM (https://console.aws.amazon.com/iam)
