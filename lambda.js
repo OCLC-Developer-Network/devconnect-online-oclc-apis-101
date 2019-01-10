@@ -1,19 +1,26 @@
+const AWS = require('aws-sdk');
 const awsServerlessExpress = require('aws-serverless-express');
 const yaml = require('js-yaml');
-const get_config = require("./src/config.js");
 let environment = 'prod';
+
+const params = {
+		  CiphertextBlob: fs.readFileSync(environment + "_config_encrypted.txt")
+		}
+
+const kms = new AWS.KMS({'region': 'us-east-1'});
 
 global.config = "";
 
-module.exports.universal = function(event, context){
-	get_config('prod')
-	.then(function (output){
-		global.config = yaml.load(output);
+module.exports.universal = async function(event, context){
+	try {
+		let data = await kms.decrypt(params).promise();
+		
+		global.config = yaml.load(data['Plaintext'].toString());
 		let app = require('./src/server.js');		
 		const server = awsServerlessExpress.createServer(app)
 		return awsServerlessExpress.proxy(server, event, context);
-	})
-	.catch(function (err){
-		throw ('Config failed to load' + err);
-	});
+	} catch (Error){
+		console.log(Error, Error.stack);
+	    return Error;
+	}
 }
