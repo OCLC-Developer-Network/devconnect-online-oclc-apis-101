@@ -60,7 +60,7 @@ module.exports = class Bib {
     }
     
     getRecord(){
-    	return this.record;
+    		return this.record;
     }
     
     getRecordAsString(){

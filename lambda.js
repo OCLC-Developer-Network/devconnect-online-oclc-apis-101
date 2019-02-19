@@ -1,3 +1,4 @@
+const fs = require('fs');
 const AWS = require('aws-sdk');
 const awsServerlessExpress = require('aws-serverless-express');
 const yaml = require('js-yaml');
