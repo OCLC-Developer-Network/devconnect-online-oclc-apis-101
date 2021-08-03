@@ -37,7 +37,7 @@
     "nodeauth": "git+https://github.com/OCLC-Developer-Network/oclc-auth-node.git",
     "read-yaml": "^1.1.0",
     "string": "^3.3.3",
-    "xmldom": "^0.1.27",
+    "xmldom": "^0.6.0",
     "xpath": "0.0.27"
   }
 }
