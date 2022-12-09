@@ -31,7 +31,7 @@
     "axios": "^0.17.1",
     "body-parser": "^1.18.3",
     "ejs": "^2.6.1",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "js-yaml": "^3.12.1",
     "marc4js": "0.0.9",
     "nodeauth": "git+https://github.com/OCLC-Developer-Network/oclc-auth-node.git",
